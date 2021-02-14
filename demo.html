@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <title>DEMO - jquery single page form</title>
+  <meta charset="utf-8">
+  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="./src/jquery-single-page-form.js"></script>
+</head>
+<script>
+  $(function () {
+    $(window).singlePageForm({
+      demo: true,
+      validators: [
+        {
+          name: "passport_number",
+          message: "Required",
+          messageSelector: ".row.passport-number .error-message",
+          validate: function (val) { return val !== "" },
+        },
+      ],
+      dataToConfirms: [
+        {
+          confirmSelector: ".row.passport-number .item-confirm",
+          dataName: "passport_number",
+        },
+        {
+          confirmSelector: ".row.name .item-confirm",
+          syncFunc: function (data) { return data.first_name + " " + data.last_name },
+        },
+        {
+          confirmSelector: ".row.birth .item-confirm",
+          dataName: "birth",
+        },
+        {
+          confirmSelector: ".row.birth .item-confirm",
+          dataName: "birth",
+        },
+        {
+          confirmSelector: ".row.purposes .item-confirm",
+          syncFunc: function (data) {
+            const translators = {
+              sightseeing: "Sightseeing",
+              business: "Business",
+              employment: "Employment",
+            }
+
+            let results = []
+            Object.keys(data.purposes).forEach(function (key, val) {
+              if (!val) {
+                return
+              }
+
+              results.push(translators[key])
+            })
+            return results.join(", ")
+          },
+        },
+        {
+          confirmSelector: ".row.gender .item-confirm",
+          syncFunc: function (data) {
+            const translators = {
+              male: "Male",
+              female: "Female",
+            }
+
+            return translators[data["gender"]]
+          },
+        },
+      ],
+    })
+  });
+</script>
+<style type="text/css">
+  .row {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  .row>.item-name {
+    width: 200px;
+  }
+
+  .row>.item-input>input {
+    width: 200px;
+  }
+
+  .row>.item-confirm {
+    margin: 0;
+  }
+
+  .error-message {
+    margin: 4px 0 0 0;
+    color: #ee0000;
+  }
+
+  button,
+  label,
+  input[type='checkbox'],
+  input[type='radio'] {
+    cursor: pointer;
+  }
+
+  button {
+    padding: 6px 30px;
+  }
+
+  #prev-button,
+  #send-button,
+  .status-completed {
+    display: none;
+  }
+</style>
+
+<body>
+  <h1>DEMO - jquery single page form</h1>
+  <form id="entry-form" class="status-input status-confirm">
+    <div class="row passport-number">
+      <div class="item-name">Passport No.</div>
+      <div class="item-input status-input">
+        <input type="text" name="passport_number" placeholder="SAMPLE-00-000000">
+        <p class="error-message"></p>
+      </div>
+      <p class="item-confirm status-confirm"></p>
+    </div>
+    <div class="row name">
+      <div class="item-name">Name</div>
+      <div class="item-input status-input">
+        <input type="text" name="first_name" placeholder="First Name">
+        <input type="text" name="last_name" placeholder="Last Name">
+        <p class="error-message"></p>
+      </div>
+      <p class="item-confirm status-confirm"></p>
+    </div>
+    <div class="row birth">
+      <div class="item-name">Date of birth</div>
+      <div class="item-input status-input">
+        <input type="date" name="birth">
+        <p class="error-message"></p>
+      </div>
+      <p class="item-confirm status-confirm"></p>
+    </div>
+    <div class="row purposes">
+      <div class="item-name">purposes of Visit</div>
+      <div class="item-input status-input">
+        <label>
+          <input type="checkbox" name="purposes" value="sightseeing" /> Sightseeing
+        </label>
+        <label>
+          <input type="checkbox" name="purposes" value="business" /> Business
+        </label>
+        <label>
+          <input type="checkbox" name="purposes" value="employment" /> Employment
+        </label>
+        <p class="error-message"></p>
+      </div>
+      <p class="item-confirm status-confirm"></p>
+    </div>
+    <div class="row gender">
+      <div class="item-name">Gender</div>
+      <div class="item-input status-input">
+        <label>
+          <input type="radio" name="gender" value="male" /> Male
+        </label>
+        <label>
+          <input type="radio" name="gender" value="female" /> Female
+        </label>
+        <p class="error-message"></p>
+      </div>
+      <p class="item-confirm status-confirm"></p>
+    </div>
+    <div class="buttons">
+      <button id="confirm-button" type="button">confirm</button>
+      <button id="prev-button" type="button">prev</button>
+      <button id="send-button" type="button">send</button>
+    </div>
+  </form>
+  <div class="status-completed">
+    <p>Form submission completed.</p>
+    <div class="buttons">
+      <button id="clear-button" type="button">clear</button>
+    </div>
+  </div>
+</body>
+
+</html>
