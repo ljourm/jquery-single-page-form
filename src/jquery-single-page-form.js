@@ -174,7 +174,7 @@
     getValues: function() {
       const data = {}
 
-      $(settings.selectorNames.form).find("input").each(function() {
+      $(settings.selectorNames.form).find("input, textarea").each(function() {
         const $el = $(this)
         const type = $el.attr("type")
         const name = $el.attr("name")
