@@ -1,0 +1,8 @@
+{
+  "name": "jquery-single-page-form",
+  "version": "0.1.0",
+  "main": "index.js",
+  "url": "https://github.com/ljourm/jquery-single-page-form",
+  "author": "ljourm",
+  "license": "MIT"
+}
