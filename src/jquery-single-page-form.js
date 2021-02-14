@@ -81,6 +81,10 @@
     prevButtonClicked() {
       methods.showInput()
 
+      if(settings.scrollTop) {
+        methods.scrollTop(0)
+      }
+
       return false
     },
     sendButtonClicked() {
