@@ -9,6 +9,7 @@
 
   const settings = {
     demo: false,
+    skipValidation: false,
     url: null,
     selectorNames: {
       form: "form",
@@ -220,6 +221,10 @@
       })
     },
     validate: function() {
+      if(settings.skipValidation) {
+        return true
+      }
+
       const data = methods.getValues()
       let allSuccess = true
 
