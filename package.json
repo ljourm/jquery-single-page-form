@@ -5,7 +5,11 @@
   "url": "https://github.com/ljourm/jquery-single-page-form",
   "author": "ljourm",
   "license": "MIT",
+  "scripts": {
+    "build": "uglifyjs ./src/jquery-single-page-form.js --compress --mangle -o ./dest/jquery-single-page-form.min.js"
+  },
   "devDependencies": {
-    "jquery": "^3.0.0"
+    "jquery": "^3.0.0",
+    "uglify-js": "^3.12.8"
   }
 }
