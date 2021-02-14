@@ -36,4 +36,4 @@ TODO
 
 ## License
 
-[MIT license](LICENCE)
+[MIT license](LICENSE)
