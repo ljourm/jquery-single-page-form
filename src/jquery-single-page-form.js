@@ -224,16 +224,25 @@
       let allSuccess = true
 
       settings.validators.forEach(function(validator) {
+        $(validator.messageSelector).text("")
+      })
+
+      settings.validators.forEach(function(validator) {
         const val = data[validator.name]
-        const isSuccess = validator.validate(val)
-        let message = ""
+        const isSuccess = validator.validate(val, data)
 
-        if(!isSuccess) {
-          allSuccess = false
-          message = validator.message
+        if(isSuccess) { return }
+
+        allSuccess = false
+
+        const $messageElement = $(validator.messageSelector)
+        const text = $messageElement.text()
+        if(text) {
+          $messageElement.text(text + "\n" + validator.message)
         }
-
-        $(validator.messageSelector).text(message)
+        else {
+          $messageElement.text(validator.message)
+        }
       })
 
       return allSuccess
