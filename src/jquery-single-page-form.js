@@ -213,7 +213,7 @@
 
       $.ajax({
         type: "POST",
-        url: url,
+        url: settings.url,
         datatype: "json",
         data: methods.getValues(),
       }).done(function() {
