@@ -1,5 +1,7 @@
 # jquery-single-page-form
 
+The jQuery plugin that displays the input, confirmation, and completion screen flow. It uses jQuery ajax to provide a single page.
+
 [Demo](https://ljourm.github.io/jquery-single-page-form/demo.html)
 
 ## Usage
