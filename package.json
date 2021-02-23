@@ -6,9 +6,15 @@
   "author": "ljourm",
   "license": "MIT",
   "scripts": {
-    "build": "uglifyjs ./src/jquery-single-page-form.js --compress --mangle -o ./dest/jquery-single-page-form.min.js"
+    "build": "uglifyjs ./src/jquery-single-page-form.js --compress --mangle -o ./dest/jquery-single-page-form.min.js",
+    "lint": "eslint --ext .js --ignore-path .gitignore .",
+    "lint:fix": "eslint --ext .js --ignore-path .gitignore . --fix"
   },
   "devDependencies": {
+    "eslint": "^7.20.0",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1",
     "uglify-js": "^3.12.8"
   }
 }
