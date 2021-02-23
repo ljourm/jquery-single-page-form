@@ -5,7 +5,7 @@
   "keywords": [
     "jquery-plugin"
   ],
-  "main": "index.js",
+  "main": "./src/jquery-single-page-form.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/ljourm/jquery-single-page-form"
