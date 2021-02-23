@@ -1,6 +1,7 @@
-(function($){
-  $.fn.singlePageForm = function(options = {}) {
-    $.extend(true, settings, options);
+/* globals jQuery */
+;(function ($) {
+  $.fn.singlePageForm = function (options) {
+    $.extend(true, settings, options)
 
     methods.init()
 
@@ -46,33 +47,45 @@
     },
     useLeaveMessage: true,
     scrollTop: true,
-    statusAfterChanged: function() {},
+    statusAfterChanged: function () {},
   }
 
   const methods = {
-    init : function() {
+    init: function () {
       methods.showInput()
 
-      $(settings.selectorNames.buttons.confirm).on("click", methods.confirmButtonClicked)
-      $(settings.selectorNames.buttons.prev).on("click", methods.prevButtonClicked)
-      $(settings.selectorNames.buttons.send).on("click", methods.sendButtonClicked)
-      $(settings.selectorNames.buttons.clear).on("click", methods.clearButtonClicked)
+      $(settings.selectorNames.buttons.confirm).on(
+        "click",
+        methods.confirmButtonClicked
+      )
+      $(settings.selectorNames.buttons.prev).on(
+        "click",
+        methods.prevButtonClicked
+      )
+      $(settings.selectorNames.buttons.send).on(
+        "click",
+        methods.sendButtonClicked
+      )
+      $(settings.selectorNames.buttons.clear).on(
+        "click",
+        methods.clearButtonClicked
+      )
 
-      $(settings.selectorNames.form + " input").each(function(_i, el) {
+      $(settings.selectorNames.form + " input").each(function (_i, el) {
         $(el).on("change", methods.addLeaveEvent)
       })
     },
     confirmButtonClicked() {
-      if(settings.demo) {
+      if (settings.demo) {
         console.log(methods.getValues())
       }
 
-      if(methods.validate()) {
+      if (methods.validate()) {
         methods.syncToConfirm()
         methods.showConfirm()
       }
 
-      if(settings.scrollTop) {
+      if (settings.scrollTop) {
         methods.scrollTop(0)
       }
 
@@ -81,34 +94,34 @@
     prevButtonClicked() {
       methods.showInput()
 
-      if(settings.scrollTop) {
+      if (settings.scrollTop) {
         methods.scrollTop(0)
       }
 
       return false
     },
     sendButtonClicked() {
-      $sendButton = $(this)
+      const $sendButton = $(this)
 
-      if($sendButton.prop("disabled")) {
+      if ($sendButton.prop("disabled")) {
         return false
       }
 
       $sendButton.prop("disabled", true)
 
-      results = methods.send({
-        successEvent: function() {
+      methods.send({
+        successEvent: function () {
           methods.showCompleted()
           methods.removeLeaveEvent()
 
-          if(settings.scrollTop) {
+          if (settings.scrollTop) {
             methods.scrollTop(0)
           }
         },
-        failEvent: function() {
+        failEvent: function () {
           alert(settings.messages.sendError)
         },
-        completedEvent: function() {
+        completedEvent: function () {
           $sendButton.prop("disabled", false)
         },
       })
@@ -120,7 +133,7 @@
 
       return false
     },
-    showInput: function() {
+    showInput: function () {
       methods.hideAll([
         settings.selectorNames.status.confirm,
         settings.selectorNames.status.completed,
@@ -135,7 +148,7 @@
 
       settings.statusAfterChanged()
     },
-    showConfirm: function() {
+    showConfirm: function () {
       methods.hideAll([
         settings.selectorNames.status.input,
         settings.selectorNames.status.completed,
@@ -150,7 +163,7 @@
 
       settings.statusAfterChanged()
     },
-    showCompleted: function() {
+    showCompleted: function () {
       methods.hideAll([
         settings.selectorNames.status.input,
         settings.selectorNames.status.confirm,
@@ -165,46 +178,45 @@
 
       settings.statusAfterChanged()
     },
-    showAll: function(selectors) {
+    showAll: function (selectors) {
       $(selectors.join(",")).show()
     },
-    hideAll: function(selectors) {
+    hideAll: function (selectors) {
       $(selectors.join(",")).hide()
     },
-    getValues: function() {
+    getValues: function () {
       const data = {}
 
-      $(settings.selectorNames.form).find("input, textarea").each(function() {
-        const $el = $(this)
-        const type = $el.attr("type")
-        const name = $el.attr("name")
-        const value = $el.val()
+      $(settings.selectorNames.form)
+        .find("input, textarea")
+        .each(function () {
+          const $el = $(this)
+          const type = $el.attr("type")
+          const name = $el.attr("name")
+          const value = $el.val()
 
-        if(type == "checkbox") {
-          if(!data[name]) {
-            data[name] = {}
-          }
+          if (type == "checkbox") {
+            if (!data[name]) {
+              data[name] = {}
+            }
 
-          data[name][value] = $el.prop("checked")
-        }
-        else if(type == "radio") {
-          if($el.prop("checked")) {
+            data[name][value] = $el.prop("checked")
+          } else if (type == "radio") {
+            if ($el.prop("checked")) {
+              data[name] = value
+            } else if (!data[name]) {
+              data[name] = null
+            }
+          } else {
             data[name] = value
           }
-          else if(!data[name]) {
-            data[name] = null
-          }
-        }
-        else {
-          data[name] = value
-        }
-      })
+        })
 
       return data
     },
-    send: function(options) {
-      if(settings.demo) {
-        setTimeout(function() {
+    send: function (options) {
+      if (settings.demo) {
+        setTimeout(function () {
           options.successEvent()
           options.completedEvent()
         }, 1000)
@@ -216,79 +228,81 @@
         url: settings.url,
         datatype: "json",
         data: methods.getValues(),
-      }).done(function() {
-        options.successEvent()
-      }).fail(function() {
-        options.failEvent()
-      }).always(function() {
-        options.completedEvent()
       })
+        .done(function () {
+          options.successEvent()
+        })
+        .fail(function () {
+          options.failEvent()
+        })
+        .always(function () {
+          options.completedEvent()
+        })
     },
-    validate: function() {
-      if(settings.skipValidation) {
+    validate: function () {
+      if (settings.skipValidation) {
         return true
       }
 
       const data = methods.getValues()
       let allSuccess = true
 
-      settings.validators.forEach(function(validator) {
+      settings.validators.forEach(function (validator) {
         $(validator.messageSelector).text("")
       })
 
-      settings.validators.forEach(function(validator) {
+      settings.validators.forEach(function (validator) {
         const val = data[validator.name]
         const isSuccess = validator.validate(val, data)
 
-        if(isSuccess) { return }
+        if (isSuccess) {
+          return
+        }
 
         allSuccess = false
 
         const $messageElement = $(validator.messageSelector)
         const text = $messageElement.text()
-        if(text) {
+        if (text) {
           $messageElement.text(text + "\n" + validator.message)
-        }
-        else {
+        } else {
           $messageElement.text(validator.message)
         }
       })
 
       return allSuccess
     },
-    syncToConfirm: function() {
+    syncToConfirm: function () {
       const data = methods.getValues()
 
-      settings.dataToConfirms.forEach(function(dataToConfirm) {
+      settings.dataToConfirms.forEach(function (dataToConfirm) {
         let value = ""
 
-        if(dataToConfirm.syncFunc) {
+        if (dataToConfirm.syncFunc) {
           value = dataToConfirm.syncFunc(data)
-        }
-        else {
+        } else {
           value = data[dataToConfirm.dataName]
         }
 
         $(dataToConfirm.confirmSelector).text(value)
       })
-
     },
-    scrollTop: function(top) {
-      $("html, body").animate({ scrollTop: top }, 500, "swing");
+    scrollTop: function (top) {
+      $("html, body").animate({ scrollTop: top }, 500, "swing")
     },
-    addLeaveEvent: function() {
-      if(!settings.useLeaveMessage || settings.formChanged) {
+    addLeaveEvent: function () {
+      if (!settings.useLeaveMessage || settings.formChanged) {
         return
       }
 
       settings.formChanged = true
       window.addEventListener("beforeunload", methods.changeWindowHandler)
     },
-    removeLeaveEvent: function() {
+    removeLeaveEvent: function () {
       settings.formChanged = false
       window.removeEventListener("beforeunload", methods.changeWindowHandler)
     },
-    changeWindowHandler: function(e) {
+    changeWindowHandler: function (e) {
       e.returnValue = settings.messages.leave
     },
   }
