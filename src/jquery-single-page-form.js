@@ -314,4 +314,4 @@
       e.returnValue = settings.messages.leave
     },
   }
-})(jQuery)
+})
