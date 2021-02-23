@@ -10,7 +10,9 @@
 <script>
   $(function () {
     $(window).singlePageForm({
-      demo: true,
+      outputLog: true,
+      noRequest: true,
+      mockResponseSuccess: false,
       validators: [
         {
           name: "passport_number",

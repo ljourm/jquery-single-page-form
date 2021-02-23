@@ -17,7 +17,9 @@
   }
 
   const settings = {
-    demo: false,
+    outputLog: false,
+    noRequest: false,
+    mockResponseSuccess: true,
     skipValidation: false,
     url: null,
     selectorNames: {
@@ -84,7 +86,7 @@
       })
     },
     confirmButtonClicked() {
-      if (settings.demo) {
+      if (settings.outputLog) {
         console.log(methods.getValues())
       }
 
@@ -223,9 +225,13 @@
       return data
     },
     send: function (options) {
-      if (settings.demo) {
+      if (settings.noRequest) {
         setTimeout(function () {
-          options.successEvent()
+          if (settings.mockResponseSuccess) {
+            options.successEvent()
+          } else {
+            options.failEvent()
+          }
           options.completedEvent()
         }, 1000)
         return
