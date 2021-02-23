@@ -1,5 +1,13 @@
 /* globals jQuery */
-;(function ($) {
+;(function (factory) {
+  if (typeof exports == "object" && typeof module == "object") {
+    // CommonJS
+    module.exports = factory(require("jquery"))
+  } else {
+    // Browser
+    factory(jQuery)
+  }
+})(function ($) {
   $.fn.singlePageForm = function (options) {
     $.extend(true, settings, options)
 
