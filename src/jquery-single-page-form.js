@@ -85,7 +85,7 @@
         $(el).on("change", methods.addLeaveEvent)
       })
     },
-    confirmButtonClicked() {
+    confirmButtonClicked: function () {
       if (settings.outputLog) {
         console.log(methods.getValues())
       }
@@ -101,7 +101,7 @@
 
       return false
     },
-    prevButtonClicked() {
+    prevButtonClicked: function () {
       methods.showInput()
 
       if (settings.scrollTop) {
@@ -110,7 +110,7 @@
 
       return false
     },
-    sendButtonClicked() {
+    sendButtonClicked: function () {
       const $sendButton = $(this)
 
       if ($sendButton.prop("disabled")) {
@@ -138,7 +138,7 @@
 
       return false
     },
-    clearButtonClicked() {
+    clearButtonClicked: function () {
       methods.showInput()
 
       return false
