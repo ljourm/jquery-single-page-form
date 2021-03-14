@@ -1,6 +1,6 @@
 {
   "name": "jquery-single-page-form",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "The jQuery plugin that displays the input, confirmation, and completion screen flow. It uses jQuery ajax to provide a single page.",
   "keywords": [
     "jquery-plugin"
