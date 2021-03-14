@@ -1,5 +1,8 @@
 # jquery-single-page-form
 
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+
 The jQuery plugin that displays the input, confirmation, and completion screen flow. It uses jQuery ajax to provide a single page.
 
 [Demo](https://ljourm.github.io/jquery-single-page-form/demo.html)
@@ -39,3 +42,8 @@ TODO
 ## License
 
 [MIT license](LICENSE)
+
+[npm-image]:       https://badgen.net/npm/v/jquery-single-page-form
+[npm-url]:         https://npmjs.org/package/jquery-single-page-form
+[downloads-image]: https://badgen.net/npm/dt/jquery-single-page-form
+[downloads-url]:   https://npmjs.org/package/jquery-single-page-form
